@@ -1,0 +1,29 @@
+/* @media only screen and (max-device-width: 1600px) {
+    .bg1, .bg2, .bg3 {
+        background-attachment: scroll;
+        min-height: 400px;
+    }
+} */
+@media (max-width: 740px){
+
+    #nav li{
+        display: block;
+    }
+    #top .search-icon{
+        display: none;
+    }
+    #top .bar-btn{
+        float: right;
+        padding: 0 16px;
+        line-height: 43px;
+    }
+    #top .bar-btn:hover{
+        background-color: black;
+        color: white;
+    }
+
+    .bg1 .bg1-display-middle span{
+        font-size: 6px !important; 
+    }
+}
+    

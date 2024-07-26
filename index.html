@@ -6,9 +6,10 @@
     <title>Huy Vo Hoang</title>
     <link rel="icon" type="images/jpg" href="images/logo.jpg">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="icon/themify-icons/themify-icons.css">
-    <script>src="main.css"</script>
+    
 </head>
 <body>
     <div id="top">
@@ -20,6 +21,9 @@
         </ul>
         <div class="search-btn">
             <i class="search-icon ti-search"></i>
+        </div>
+        <div id="mobile-menu" class="bar-btn" >
+            <i class="bar-icon ti-menu" onclick="toggleFunction()"></i>
         </div>
     </div>
     <div class="bg1">
@@ -63,13 +67,13 @@
                 <img src="images/webcrawl.jpg" alt="crawling" class="project-img">
                 <p style="font-weight: 800;">Crawling</p>
                 <p style="color: gray;">This project I made to crawl graduation exam result of my province in order to practice some skills of Data Sciencetist.</p>
-                <button class="project-check" onclick="">Check it</button>
+                <button class="project-check" onclick="redirecttoGithub('crawl')">Check it</button>
             </div>
             <div class="project-item">
                 <img src="images/battleship.webp" alt="ship" class="project-img">
                 <p style="font-weight: 800;">Battleship</p>
                 <p style="color: gray;">This is my assignment in Computer Architecture course in my school. I made it in assembly language.</p>
-                <button class="project-check" onclick="">Check it</button>
+                <button class="project-check" onclick="redirecttoGithub('ship')">Check it</button>
             </div>
         </div>
     </div>
@@ -90,9 +94,9 @@
 
     <div class="contact-detail">
         <div id="addr">
-            <p class="addr-ele ti-location-pin">  Ho Chi Minh City, Viet Nam</p>
-            <p class="addr-ele ti-headphone">  Phone: +84939025344</p>
-            <p class="addr-ele ti-email">  Email: vohoanghuy8811@gmail.com</p>
+            <p class="addr-ele"> <i class="ti-location-pin"></i>  Ho Chi Minh City, Viet Nam</p>
+            <p class="addr-ele "> <i class="ti-headphone"></i>  Phone: +84939025344</p>
+            <p class="addr-ele"> <i class="ti-email"></i>  Email: vohoanghuy8811@gmail.com</p>
         </div>
         <div id="mailing">
             <input type="text" placeholder="Name" style="float: left;">
@@ -112,5 +116,6 @@
         </div>
         <p class="nocopyright">Powered by <a href="https://www.w3schools.com/">w3.css</a> </p>
     </div>
+    <script src="showtable.js"></script>
 </body>
 </html>

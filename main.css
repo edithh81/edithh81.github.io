@@ -9,6 +9,8 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+
 .yuh-padding-64 {
   padding-top: 64px !important;
   padding-bottom: 64px !important;
@@ -85,6 +87,7 @@ body, html{
   left: 0;
   right: 0;
   background-color: white;
+  overflow: hidden;
 }
 
 #nav{
@@ -134,7 +137,9 @@ body, html{
 .bg1-display-middle{
   position: absolute;
   top: 50%;
-  left: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 .content{
@@ -172,8 +177,7 @@ body, html{
  .member-list .member-item{
   width: 50%;
   /* min-width: 150px; */
-  height: fit-content;
-  height: 80%;
+  height: fit-content !important;
   /* margin-left: 3%;
   margin-right: 3%;
   margin-top: 50px; */
@@ -184,7 +188,7 @@ body, html{
 
 .member-img{
   width: 60% !important;
-  height: 80% ;
+  height: fit-content ;
   opacity: 0.6;
   border-radius: 5px;
 } 
