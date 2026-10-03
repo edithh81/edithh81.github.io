@@ -14,14 +14,16 @@ layout: default
       {% if p.location %}<li><span class="k">based</span> {{ p.location }}</li>{% endif %}
     </ul>
     <nav class="links">
-      {% if p.github %}<a href="https://github.com/{{ p.github }}">github</a>{% endif %}
-      {% if p.linkedin %}<a href="{{ p.linkedin }}">linkedin</a>{% endif %}
-      {% if p.orcid %}<a href="{{ p.orcid }}">orcid</a>{% endif %}
-      {% if p.email %}<a href="mailto:{{ p.email }}">email</a>{% endif %}
-      {% if p.cv %}<a href="{{ p.cv | relative_url }}">cv</a>{% endif %}
+      {% if p.github %}<span><a href="https://github.com/{{ p.github }}">github</a></span>{% endif %}
+      {% if p.linkedin %}<span><a href="{{ p.linkedin }}">linkedin</a></span>{% endif %}
+      {% if p.orcid %}<span><a href="{{ p.orcid }}">orcid</a></span>{% endif %}
+      {% if p.email %}<span><a href="mailto:{{ p.email }}">email</a></span>{% endif %}
+      {% if p.cv %}<span><a href="{{ p.cv | relative_url }}">cv</a></span>{% endif %}
     </nav>
   </div>
 </header>
+
+<hr class="fade">
 
 <section>
   <h2 class="bar">bio</h2>
@@ -35,9 +37,12 @@ layout: default
     {% assign logo = site.static_files | where: "path", a.logo | first %}
     <li>
       <span class="when">{{ a.start }} –<br>{{ a.end | default: "now" }}</span>
-      <a class="org" href="{{ a.url }}" title="{{ a.org }}">
-        {% if logo %}<img class="logo" src="{{ a.logo | relative_url }}" alt="{{ a.org }}">{% else %}<span class="logo initials">{{ a.initials }}</span>{% endif %}
-      </a>
+      <div class="ico">
+        <span class="dot"></span>
+        <a class="org" href="{{ a.url }}" title="{{ a.org }}">
+          {% if logo %}<img class="logo" src="{{ a.logo | relative_url }}" alt="{{ a.org }}">{% else %}<span class="logo initials">{{ a.initials }}</span>{% endif %}
+        </a>
+      </div>
       <p class="desc">{{ a.desc }}</p>
     </li>
     {% endfor %}
