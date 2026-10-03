@@ -1,0 +1,19 @@
+name: Huy Hoang
+paper_name: Hoang-Huy Vo           # how your name appears in author lists (gets underlined)
+tagline: ai engineer · computer vision · graph learning
+avatar: /assets/img/avatar.jpg
+birthday:                          # e.g. 11 Aug 2004 (leave empty to hide)
+location: Ho Chi Minh City, Vietnam
+email: vohoanghuy8811@gmail.com
+github: edithh81
+linkedin: https://www.linkedin.com/in/edith81/
+orcid: https://orcid.org/0009-0009-9357-820X
+cv: /assets/cv.pdf
+
+bio: >
+  Huy is an AI engineer and researcher. He obtained his B.Sc. in Computer Science
+  (Honors Program) from Ho Chi Minh City University of Technology, where he worked
+  on knowledge-graph-based recommendation at the HPCC Lab under <a href="https://scholar.google.com/citations?user=m2fgQRAAAAAJ&hl=vi">Assoc. Prof. Dr. Thoai Nam</a>.
+  He is currently an AI engineer at Cake Digital Bank, building face anti-spoofing and
+  face verification models. His interests are computer vision, graph neural networks
+  and recommendation systems.

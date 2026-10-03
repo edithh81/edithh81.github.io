@@ -1,0 +1,59 @@
+---
+layout: default
+---
+{% assign p = site.data.profile %}
+{% capture me %}<u>{{ p.paper_name }}</u>{% endcapture %}
+
+<header class="headline">
+  <img class="avatar" src="{{ p.avatar | relative_url }}" alt="{{ p.name }}">
+  <div class="id">
+    <h1>{{ p.name }}</h1>
+    <p class="tagline">{{ p.tagline }}</p>
+    <ul class="facts">
+      {% if p.birthday %}<li><span class="k">born</span> {{ p.birthday }}</li>{% endif %}
+      {% if p.location %}<li><span class="k">based</span> {{ p.location }}</li>{% endif %}
+    </ul>
+    <nav class="links">
+      {% if p.github %}<a href="https://github.com/{{ p.github }}">github</a>{% endif %}
+      {% if p.linkedin %}<a href="{{ p.linkedin }}">linkedin</a>{% endif %}
+      {% if p.orcid %}<a href="{{ p.orcid }}">orcid</a>{% endif %}
+      {% if p.email %}<a href="mailto:{{ p.email }}">email</a>{% endif %}
+      {% if p.cv %}<a href="{{ p.cv | relative_url }}">cv</a>{% endif %}
+    </nav>
+  </div>
+</header>
+
+<section>
+  <h2 class="bar">bio</h2>
+  <p class="bio">{{ p.bio }}</p>
+</section>
+
+<section>
+  <h2 class="bar">experience</h2>
+  <ol class="timeline">
+    {% for a in site.data.affiliations %}
+    {% assign logo = site.static_files | where: "path", a.logo | first %}
+    <li>
+      <span class="when">{{ a.start }} –<br>{{ a.end | default: "now" }}</span>
+      <a class="org" href="{{ a.url }}" title="{{ a.org }}">
+        {% if logo %}<img class="logo" src="{{ a.logo | relative_url }}" alt="{{ a.org }}">{% else %}<span class="logo initials">{{ a.initials }}</span>{% endif %}
+      </a>
+      <p class="desc">{{ a.desc }}</p>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section>
+  <h2 class="bar">publications</h2>
+  <ol class="pubs">
+    {% for pub in site.data.publications %}
+    <li>
+      <span class="title">{{ pub.title }}</span>
+      <span class="authors">{{ pub.authors | replace: p.paper_name, me }}</span>
+      <span class="venue"><em>{{ pub.venue }}</em>, {{ pub.year }}</span>
+      {% if pub.links %}<span class="plinks">{% for l in pub.links %}<a href="{{ l[1] }}">[{{ l[0] }}]</a> {% endfor %}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+</section>

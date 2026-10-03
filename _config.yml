@@ -1,0 +1,10 @@
+title: Huy Hoang
+description: Huy Hoang — AI engineer and researcher
+url: "https://edithh81.github.io"
+baseurl: ""      # leave empty for a user site (username.github.io)
+
+markdown: kramdown
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
