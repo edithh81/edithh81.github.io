@@ -1,0 +1,340 @@
+---
+layout: default
+title: graduation
+permalink: /graduation/
+description: Huy's graduation ceremony — invitation and wish board
+extra_css: /assets/css/graduation.css
+---
+{% assign g = site.data.graduation %}
+{% assign p = site.data.profile %}
+
+<p class="back"><a href="{{ '/' | relative_url }}">← back home</a></p>
+
+<!-- invitation: poster in the middle, details on both sides -->
+
+<!-- personal greeting: from ?to=Name in the link, or typed by the guest -->
+<div class="greet">
+  <p class="greet-dear" id="greet-dear" hidden>dear <strong id="greet-name"></strong>,</p>
+  <p class="eyebrow">you are warmly invited to celebrate</p>
+  <form class="greet-form" id="greet-form">
+    <label for="greet-input">who's opening this invitation?</label>
+    <span class="greet-row">
+      <input id="greet-input" type="text" maxlength="40" placeholder="your name" autocomplete="name">
+      <button type="submit">open ✉</button>
+    </span>
+  </form>
+  <button type="button" class="greet-change" id="greet-change" hidden>not you?</button>
+  <p><button type="button" class="btn card-open" id="card-open" hidden>🖼 get my invitation card</button></p>
+</div>
+
+<!-- preview of the generated card -->
+<dialog class="card-dialog" id="card-dialog" aria-label="your invitation card">
+  <img id="card-img" alt="your personal invitation card">
+  <p class="card-hint">on a phone you can also press and hold the image to save it</p>
+  <div class="card-actions">
+    <a class="btn" id="card-save" href="#" download>⬇ save image</a>
+    <button type="button" class="btn" id="card-share" hidden>↗ share</button>
+    <button type="button" class="btn ghost" id="card-close">close</button>
+  </div>
+</dialog>
+
+<!-- phones only: the essentials before the poster -->
+<div class="quick">
+  <p>{% for d in g.days %}{% unless forloop.first %}<em class="or">or</em>{% endunless %}<span>{{ d.start | date: "%a %-d/%-m" | downcase }} · from {{ d.start | date: "%H:%M" }}</span>{% endfor %}</p>
+  <p><span>{{ g.venue }}, HCMUT</span></p>
+</div>
+
+<section class="hero">
+  <aside class="card card-when" aria-label="dates and times">
+    <span class="tape"></span>
+    <p class="card-label">when</p>
+    <div class="cals">
+      {% for d in g.days %}
+      {% unless forloop.first %}<span class="or">or</span>{% endunless %}
+      <div class="cal-wrap">
+        <div class="cal">
+          <span class="cal-month">{{ d.start | date: "%b" | downcase }}</span>
+          <span class="cal-day">{{ d.start | date: "%-d" }}</span>
+          <span class="cal-weekday">{{ d.start | date: "%a" | downcase }}</span>
+        </div>
+        <p class="cal-time"><span>from</span> {{ d.start | date: "%H:%M" }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <figure class="poster">
+    <img src="{{ g.poster | relative_url }}" width="1080" height="1920"
+         alt="graduation poster: Hoang Huy in cap and gown, Graduate">
+  </figure>
+
+  <aside class="card card-where" aria-label="location">
+    <span class="tape"></span>
+    <p class="card-label">where</p>
+    <p class="card-big">building {{ g.venue }}</p>
+    <p class="card-small">{{ g.address }}</p>
+    <a class="pin-link" href="{{ g.map }}">see on map →</a>
+
+    {% if g.contacts %}
+    <p class="card-label contact-label">contact</p>
+    <ul class="contacts">
+      {% for c in g.contacts %}
+      {% assign digits = c.phone | remove: " " %}
+      <li><span>{{ c.name }}</span>
+        <a href="tel:+84{{ digits | slice: 1, 20 }}">{{ digits | slice: 0, 4 }} {{ digits | slice: 4, 3 }} {{ digits | slice: 7, 3 }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </aside>
+</section>
+
+<nav class="actions" aria-label="quick actions">
+  <details class="cal-menu">
+    <summary class="btn">📅 add to calendar</summary>
+    <div class="cal-options">
+      {% for d in g.days %}
+      <a class="gcal" data-start="{{ d.start }}" data-hours="{{ d.hours | default: 2 }}" href="https://calendar.google.com/" target="_blank" rel="noopener">google · {{ d.start | date: "%a %-d/%-m" | downcase }}</a>
+      {% endfor %}
+      <a id="ics" href="#" download="huy-graduation.ics">apple / outlook · all days</a>
+    </div>
+  </details>
+  <a class="btn" href="{{ g.map }}" target="_blank" rel="noopener">📍 directions</a>
+</nav>
+
+{% if g.note %}<p class="invite-note">{{ g.note }}</p>{% endif %}
+
+<!-- wish form -->
+<section>
+  <h2 class="bar">leave a wish</h2>
+  <form id="wish-form" class="wish-form" autocomplete="off">
+    <textarea id="wish-text" maxlength="280" rows="3" required
+      placeholder="write a few words for Huy…"></textarea>
+    <div class="wish-row">
+      <input id="wish-name" type="text" maxlength="40" placeholder="your name (optional)">
+      <label class="anon"><input id="wish-anon" type="checkbox"> stay anonymous</label>
+    </div>
+    <p class="privacy" id="wish-privacy">your note will be pinned on the board for everyone to see. tick <b>stay anonymous</b> and it's signed "anonymous", so no one will know it's you. nothing else about you is saved.</p>
+    <div class="wish-row">
+      <div class="colors" role="radiogroup" aria-label="paper colour">
+        {% assign colors = "yellow,pink,blue,green" | split: "," %}
+        {% for c in colors %}
+        <label><input type="radio" name="color" value="{{ c }}" {% if forloop.first %}checked{% endif %}><span class="swatch {{ c }}"></span></label>
+        {% endfor %}
+      </div>
+      <span id="wish-count" class="count">0 / 280</span>
+      <button type="submit" id="wish-send">pin it ✎</button>
+    </div>
+    <!-- bots fill every field; people never see this one -->
+    <input type="text" name="website" id="wish-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+    <p class="wish-status" id="wish-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+<!-- board -->
+<section>
+  <h2 class="bar">wish board</h2>
+  <div id="board" class="board">
+    {% unless g.wishes_api %}{% for w in g.sample_wishes %}
+    <figure class="note {{ w.color }}">
+      <blockquote>{{ w.text }}</blockquote>
+      <figcaption>— {{ w.name | default: "anonymous" }}</figcaption>
+    </figure>
+    {% endfor %}{% endunless %}
+  </div>
+  <p class="board-empty" id="board-empty"{% if g.wishes_api or g.sample_wishes.size > 0 %} hidden{% endif %}>no wishes yet. be the first one ✎</p>
+</section>
+
+<script>
+  window.INVITE = {
+    poster: {{ g.poster | relative_url | jsonify }},
+    title: {{ p.name | append: "'s graduation" | jsonify }},
+    days: [{% for d in g.days %}{% assign day = d.start | date: "%a %-d/%-m" | downcase %}{% assign hm = d.start | date: "%H:%M" %}{{ day | append: " · from " | append: hm | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
+    place: {{ g.venue | prepend: "building " | append: ", HCMUT" | jsonify }},
+    address: {{ g.address | jsonify }},
+    url: {{ site.url | remove: "https://" | append: "/graduation" | jsonify }},
+  };
+</script>
+<script src="{{ '/assets/js/invite-card.js' | relative_url }}" defer></script>
+
+<script>
+  // wishes are stored in a Google Sheet through a small Apps Script (google-apps-script/wishes.gs).
+  // set `wishes_api` in _data/graduation.yml to the script's web app URL. empty = demo mode.
+  const WISHES_API = {{ g.wishes_api | default: "" | jsonify }};
+
+  // calendar links, built from the same start times as the page
+  (() => {
+    const days = {{ g.days | jsonify }};
+    const title = {{ p.name | append: "'s graduation" | jsonify }};
+    const place = {{ g.venue | append: ", " | append: g.address | jsonify }};
+    const utc = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const span = d => {
+      const s = new Date(d.start);
+      return [s, new Date(s.getTime() + (d.hours || 2) * 3600e3)];
+    };
+
+    // "thứ 6 27/11 từ 09:35 hoặc thứ 7 28/11 từ 17:30 - ngày nào cũng được nha!!!"
+    const fmt = iso => {
+      const [, m, d, hh, mm] = iso.match(/^\d{4}-(\d\d)-(\d\d)T(\d\d):(\d\d)/);
+      const wd = ["chủ nhật","thứ 2","thứ 3","thứ 4","thứ 5","thứ 6","thứ 7"][new Date(iso.slice(0, 10) + "T12:00:00Z").getUTCDay()];
+      return `${wd} ${+d}/${+m} từ ${hh}:${mm}`;
+    };
+    const either = days.map(d => fmt(d.start)).join(" hoặc ")
+      + (days.length > 1 ? " - ngày nào cũng được nha!!!" : "");
+    const details = "Ghé chơi " + either + "\nMap: " + {{ g.map | jsonify }};
+    const esc = t => t.replace(/\\/g, "\\\\").replace(/[,;]/g, m => "\\" + m).replace(/\n/g, "\\n");
+
+    document.querySelectorAll("a.gcal").forEach(a => {
+      const [s, e] = span({ start: a.dataset.start, hours: +a.dataset.hours });
+      a.href = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+        + "&text=" + encodeURIComponent(title)
+        + "&dates=" + utc(s) + "/" + utc(e)
+        + "&location=" + encodeURIComponent(place)
+        + "&details=" + encodeURIComponent(details);
+    });
+
+    const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//huyhoang//graduation//EN"];
+    days.forEach((d, i) => {
+      const [s, e] = span(d);
+      lines.push("BEGIN:VEVENT", `UID:graduation-${utc(s)}-${i}@edithh81.github.io`,
+        "DTSTAMP:" + utc(new Date()), "DTSTART:" + utc(s), "DTEND:" + utc(e),
+        "SUMMARY:" + title, "LOCATION:" + esc(place), "DESCRIPTION:" + esc(details),
+        "URL:" + {{ g.map | jsonify }});
+      // one reminder only: the day before the first day (26/11), listing both options
+      if (i === 0) lines.push("BEGIN:VALARM", "ACTION:DISPLAY",
+        "DESCRIPTION:" + esc(title + " - " + either), "TRIGGER:-P1D", "END:VALARM");
+      lines.push("END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    document.getElementById("ics").href = "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.join("\r\n"));
+  })();
+
+  // personal greeting
+  (() => {
+    const dear = document.getElementById("greet-dear");
+    const who = document.getElementById("greet-name");
+    const gform = document.getElementById("greet-form");
+    const input = document.getElementById("greet-input");
+    const change = document.getElementById("greet-change");
+    const wishName = document.getElementById("wish-name");
+
+    const show = n => {
+      n = (n || "").trim().slice(0, 40);
+      dear.hidden = !n; gform.hidden = !!n; change.hidden = !n;
+      document.getElementById("card-open").hidden = !n;
+      who.textContent = n;
+      if (n && !wishName.value) wishName.value = n;   // sign their wish for them
+      document.title = n ? `${n}, you're invited · {{ site.title }}` : {{ page.title | append: " · " | append: site.title | jsonify }};
+    };
+
+    gform.addEventListener("submit", e => {
+      e.preventDefault();
+      show(input.value);
+      const url = new URL(location.href);
+      input.value.trim() ? url.searchParams.set("to", input.value.trim()) : url.searchParams.delete("to");
+      history.replaceState(null, "", url);
+    });
+    change.addEventListener("click", () => {
+      wishName.value = ""; show(""); input.value = ""; input.focus();
+      const url = new URL(location.href); url.searchParams.delete("to"); history.replaceState(null, "", url);
+    });
+
+    show(new URLSearchParams(location.search).get("to"));
+  })();
+
+  // close the calendar menu when tapping elsewhere
+  document.addEventListener("click", e => {
+    const m = document.querySelector(".cal-menu");
+    if (m.open && !m.contains(e.target)) m.open = false;
+  });
+
+  const form = document.getElementById("wish-form");
+  const text = document.getElementById("wish-text");
+  const name = document.getElementById("wish-name");
+  const anon = document.getElementById("wish-anon");
+  const count = document.getElementById("wish-count");
+  const board = document.getElementById("board");
+
+  // give every note a small random tilt, like paper pinned by hand
+  const tilt = el => el.style.setProperty("--tilt", (Math.random() * 6 - 3).toFixed(1) + "deg");
+  board.querySelectorAll(".note").forEach(tilt);
+
+  text.addEventListener("input", () => count.textContent = `${text.value.length} / 280`);
+  const privacy = document.getElementById("wish-privacy");
+  const PRIVACY_OPEN = privacy.innerHTML;
+  const syncAnon = () => {
+    name.disabled = anon.checked;
+    if (anon.checked) name.value = "";
+    privacy.classList.toggle("on", anon.checked);
+    privacy.innerHTML = anon.checked
+      ? '🔒 you\'re anonymous. your note will be signed "anonymous" and your name is never sent or saved.'
+      : PRIVACY_OPEN;
+  };
+  anon.addEventListener("change", syncAnon);
+
+  function pin({ text, name, color }, fresh = true) {
+    const fig = document.createElement("figure");
+    fig.className = `note ${color}` + (fresh ? " fresh" : "");
+    const q = document.createElement("blockquote");
+    q.textContent = text;
+    const cap = document.createElement("figcaption");
+    cap.textContent = "— " + (name || "anonymous");
+    fig.append(q, cap);
+    tilt(fig);
+    board.prepend(fig);
+  }
+
+  const status = document.getElementById("wish-status");
+  const send = document.getElementById("wish-send");
+  const empty = document.getElementById("board-empty");
+  const COLORS = ["yellow", "pink", "blue", "green"];
+  const say = (msg, bad) => { status.textContent = msg; status.classList.toggle("bad", !!bad); };
+
+  // load everyone's wishes; the script sends oldest first and pin() prepends, so newest ends on top
+  async function loadWishes() {
+    if (!WISHES_API) return;
+    try {
+      const res = await fetch(WISHES_API);
+      const data = await res.json();
+      board.textContent = "";
+      (data.wishes || []).forEach(w => pin({ ...w, color: COLORS.includes(w.color) ? w.color : "yellow" }, false));
+      empty.hidden = board.children.length > 0;
+    } catch (_) {
+      say("couldn't load the wish board right now, please refresh in a bit.", true);
+    }
+  }
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const wish = {
+      text: text.value.trim(),
+      name: anon.checked ? "" : name.value.trim(),
+      color: form.color.value,
+      website: document.getElementById("wish-hp").value,
+    };
+    if (!wish.text) return;
+    if (WISHES_API) {
+      send.disabled = true; say("pinning…");
+      try {
+        // text/plain keeps this a "simple" request, which Apps Script accepts from another site
+        const res = await fetch(WISHES_API, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(wish) });
+        const out = await res.json();
+        if (!out.ok) throw new Error(out.error || "failed");
+      } catch (err) {
+        send.disabled = false;
+        say("sorry, your wish didn't go through. please try again.", true);
+        return;
+      }
+      send.disabled = false;
+    }
+    pin(wish);
+    empty.hidden = true;
+    say(WISHES_API ? "pinned, thank you! 💙" : "");
+    const keep = name.value;
+    form.reset();
+    name.value = keep;   // form.reset() unticks anonymous; keep their name for a second wish
+    syncAnon();
+    count.textContent = "0 / 280";
+  });
+
+  loadWishes();
+</script>

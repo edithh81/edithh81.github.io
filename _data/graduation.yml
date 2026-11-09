@@ -1,0 +1,30 @@
+# everything on the invitation comes from here. replace the placeholders.
+poster: /assets/img/graduation-poster.jpg
+
+# one entry per day you'll be there. keep the quotes and the +07:00 (vietnam time).
+# hours: how long the "add to calendar" event lasts (the page itself just says "from ...").
+days:
+  - start: "2026-11-27T09:35:00+07:00"
+    hours: 2
+  - start: "2026-11-28T17:30:00+07:00"
+    hours: 2
+
+venue: A5
+address: HCMUT, 268 Đ. Lý Thường Kiệt, Diên Hồng, Hồ Chí Minh
+map: https://www.google.com/maps/search/?api=1&query=A5+HCMUT+268+L%C3%BD+Th%C6%B0%E1%BB%9Dng+Ki%E1%BB%87t+H%E1%BB%93+Ch%C3%AD+Minh
+
+# tap-to-call on phones. keep the quotes so the leading 0 stays.
+contacts:
+  - name: Huy
+    phone: "0906980801"
+  - name: Mom
+    phone: "0939226162"
+
+note:          # optional line under the buttons, e.g. where to meet for photos
+
+# wish board storage: paste the Apps Script web app URL here (see google-apps-script/README.md).
+# while this is empty the page runs in demo mode and shows the sample notes below.
+wishes_api:
+
+# sample notes for demo mode only. ignored once wishes_api is set.
+sample_wishes: []
