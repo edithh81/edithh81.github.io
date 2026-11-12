@@ -30,7 +30,7 @@ note:          # optional line under the buttons, e.g. where to meet for photos
 
 # wish board storage: paste the Apps Script web app URL here (see google-apps-script/README.md).
 # while this is empty the page runs in demo mode and shows the sample notes below.
-wishes_api:
+wishes_api: https://script.google.com/macros/s/AKfycbyheWcV1Nk3NBLNRE2Rsj1znK6HE2yIsd8ZxNea4RZKgTQUwut6vxmJkR0Icb4DTyi2/exec
 
 # sample notes for demo mode only. ignored once wishes_api is set.
 sample_wishes: []
