@@ -4,6 +4,11 @@ url: "https://edithh81.github.io"
 baseurl: ""      # leave empty for a user site (username.github.io)
 
 markdown: kramdown
+
+# graduation page: true = live at /graduation/ with a link on the home page.
+# false = link hidden and /graduation/ sends visitors back home.
+graduation: true
+
 exclude:
   - README.md
   - Gemfile

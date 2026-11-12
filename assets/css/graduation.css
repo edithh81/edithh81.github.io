@@ -131,6 +131,12 @@
 .cal-options a { padding: 10px 14px; border: 0; color: var(--ink); font-size: .9rem; font-weight: 600; }
 .cal-options a + a { border-top: 1px dashed var(--rule); }
 .cal-options a:hover { background: var(--bar); color: var(--bar-ink); }
+/* campus map under the invitation */
+.campus-map { margin: 0; }
+.campus-map img { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 6px 18px rgba(29,42,68,.18); }
+.campus-map figcaption { margin-top: 8px; font-size: .85rem; color: var(--muted); text-align: center; }
+.card-where .pin-link + .pin-link { margin-left: 12px; }
+
 .invite-note { margin: 10px 0 0; text-align: center; font-size: .9rem; color: var(--muted); font-style: italic; }
 
 /* form */

@@ -2,16 +2,22 @@
 poster: /assets/img/graduation-poster.jpg
 
 # one entry per day you'll be there. keep the quotes and the +07:00 (vietnam time).
-# hours: how long the "add to calendar" event lasts (the page itself just says "from ...").
+# end: when it finishes. shown on the page and used for the "add to calendar" event.
 days:
   - start: "2026-11-27T09:35:00+07:00"
-    hours: 2
+    end: "2026-11-27T11:35:00+07:00"
   - start: "2026-11-28T17:30:00+07:00"
-    hours: 2
+    end: "2026-11-28T18:30:00+07:00"
 
 venue: A5
 address: HCMUT, 268 Đ. Lý Thường Kiệt, Diên Hồng, Hồ Chí Minh
-map: https://www.google.com/maps/search/?api=1&query=A5+HCMUT+268+L%C3%BD+Th%C6%B0%E1%BB%9Dng+Ki%E1%BB%87t+H%E1%BB%93+Ch%C3%AD+Minh
+map: https://maps.app.goo.gl/93vjgKQHn5GQSSNQ6
+# campus 1 map shown under the invitation (leave empty to hide)
+campus_map: /assets/img/hcmut-campus-map.jpg
+# where tapping the campus map goes (empty = open the image itself)
+campus_map_link: https://drive.google.com/file/d/1ueLD8Y1Efnt28OXl0aOpp7mthloVN2dy/view?usp=sharing
+# location shown in google / apple / outlook calendar events (google maps finds this name)
+calendar_location: University of Technology - Vietnam National University Ho Chi Minh City, 268 Lý Thường Kiệt, Hồ Chí Minh
 
 # tap-to-call on phones. keep the quotes so the leading 0 stays.
 contacts:

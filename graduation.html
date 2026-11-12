@@ -7,6 +7,7 @@ extra_css: /assets/css/graduation.css
 ---
 {% assign g = site.data.graduation %}
 {% assign p = site.data.profile %}
+{% if site.graduation %}
 
 <p class="back"><a href="{{ '/' | relative_url }}">← back home</a></p>
 
@@ -40,7 +41,7 @@ extra_css: /assets/css/graduation.css
 
 <!-- phones only: the essentials before the poster -->
 <div class="quick">
-  <p>{% for d in g.days %}{% unless forloop.first %}<em class="or">or</em>{% endunless %}<span>{{ d.start | date: "%a %-d/%-m" | downcase }} · from {{ d.start | date: "%H:%M" }}</span>{% endfor %}</p>
+  <p>{% for d in g.days %}{% unless forloop.first %}<em class="or">or</em>{% endunless %}<span>{{ d.start | date: "%a %-d/%-m" | downcase }} · {{ d.start | date: "%H:%M" }} – {{ d.end | date: "%H:%M" }}</span>{% endfor %}</p>
   <p><span>{{ g.venue }}, HCMUT</span></p>
 </div>
 
@@ -57,7 +58,7 @@ extra_css: /assets/css/graduation.css
           <span class="cal-day">{{ d.start | date: "%-d" }}</span>
           <span class="cal-weekday">{{ d.start | date: "%a" | downcase }}</span>
         </div>
-        <p class="cal-time"><span>from</span> {{ d.start | date: "%H:%M" }}</p>
+        <p class="cal-time">{{ d.start | date: "%H:%M" }} – {{ d.end | date: "%H:%M" }}</p>
       </div>
       {% endfor %}
     </div>
@@ -74,6 +75,7 @@ extra_css: /assets/css/graduation.css
     <p class="card-big">building {{ g.venue }}</p>
     <p class="card-small">{{ g.address }}</p>
     <a class="pin-link" href="{{ g.map }}">see on map →</a>
+    {% if g.campus_map_link %}<a class="pin-link" href="{{ g.campus_map_link }}" target="_blank" rel="noopener">campus map →</a>{% endif %}
 
     {% if g.contacts %}
     <p class="card-label contact-label">contact</p>
@@ -93,7 +95,7 @@ extra_css: /assets/css/graduation.css
     <summary class="btn">📅 add to calendar</summary>
     <div class="cal-options">
       {% for d in g.days %}
-      <a class="gcal" data-start="{{ d.start }}" data-hours="{{ d.hours | default: 2 }}" href="https://calendar.google.com/" target="_blank" rel="noopener">google · {{ d.start | date: "%a %-d/%-m" | downcase }}</a>
+      <a class="gcal" data-start="{{ d.start }}" data-end="{{ d.end }}" href="https://calendar.google.com/" target="_blank" rel="noopener">google · {{ d.start | date: "%a %-d/%-m" | downcase }}</a>
       {% endfor %}
       <a id="ics" href="#" download="huy-graduation.ics">apple / outlook · all days</a>
     </div>
@@ -102,6 +104,19 @@ extra_css: /assets/css/graduation.css
 </nav>
 
 {% if g.note %}<p class="invite-note">{{ g.note }}</p>{% endif %}
+
+{% if g.campus_map %}
+<section id="campus-map">
+  <h2 class="bar">campus map</h2>
+  <figure class="campus-map">
+    <a href="{{ g.campus_map_link | default: g.campus_map | relative_url }}" target="_blank" rel="noopener">
+      <img src="{{ g.campus_map | relative_url }}" width="1600" height="995" loading="lazy"
+           alt="map of HCMUT campus 1; hall A5 (hội trường A5) is in the middle of the campus">
+    </a>
+    <figcaption>come in through the 268 Lý Thường Kiệt gate. hall {{ g.venue }} (hội trường {{ g.venue }}) is in the middle of the campus. tap the map to open it full size.</figcaption>
+  </figure>
+</section>
+{% endif %}
 
 <!-- wish form -->
 <section>
@@ -148,7 +163,7 @@ extra_css: /assets/css/graduation.css
   window.INVITE = {
     poster: {{ g.poster | relative_url | jsonify }},
     title: {{ p.name | append: "'s graduation" | jsonify }},
-    days: [{% for d in g.days %}{% assign day = d.start | date: "%a %-d/%-m" | downcase %}{% assign hm = d.start | date: "%H:%M" %}{{ day | append: " · from " | append: hm | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
+    days: [{% for d in g.days %}{% assign day = d.start | date: "%a %-d/%-m" | downcase %}{% assign hm = d.start | date: "%H:%M" %}{% assign he = d.end | date: "%H:%M" %}{{ day | append: " · " | append: hm | append: " – " | append: he | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
     place: {{ g.venue | prepend: "building " | append: ", HCMUT" | jsonify }},
     address: {{ g.address | jsonify }},
     url: {{ site.url | remove: "https://" | append: "/graduation" | jsonify }},
@@ -165,26 +180,27 @@ extra_css: /assets/css/graduation.css
   (() => {
     const days = {{ g.days | jsonify }};
     const title = {{ p.name | append: "'s graduation" | jsonify }};
-    const place = {{ g.venue | append: ", " | append: g.address | jsonify }};
+    const place = {{ g.calendar_location | default: g.address | jsonify }};
     const utc = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
     const span = d => {
       const s = new Date(d.start);
-      return [s, new Date(s.getTime() + (d.hours || 2) * 3600e3)];
+      return [s, new Date(d.end)];
     };
 
-    // "thứ 6 27/11 từ 09:35 hoặc thứ 7 28/11 từ 17:30 - ngày nào cũng được nha!!!"
-    const fmt = iso => {
+    // "thứ 6 27/11 từ 09:35 đến 11:35 hoặc thứ 7 28/11 từ 17:30 đến 18:30 - ngày nào cũng được nha!!!"
+    const fmt = (iso, endIso) => {
       const [, m, d, hh, mm] = iso.match(/^\d{4}-(\d\d)-(\d\d)T(\d\d):(\d\d)/);
+      const [, eh, em] = endIso.match(/T(\d\d):(\d\d)/);
       const wd = ["chủ nhật","thứ 2","thứ 3","thứ 4","thứ 5","thứ 6","thứ 7"][new Date(iso.slice(0, 10) + "T12:00:00Z").getUTCDay()];
-      return `${wd} ${+d}/${+m} từ ${hh}:${mm}`;
+      return `${wd} ${+d}/${+m} từ ${hh}:${mm} đến ${eh}:${em}`;
     };
-    const either = days.map(d => fmt(d.start)).join(" hoặc ")
+    const either = days.map(d => fmt(d.start, d.end)).join(" hoặc ")
       + (days.length > 1 ? " - ngày nào cũng được nha!!!" : "");
-    const details = "Ghé chơi " + either + "\nMap: " + {{ g.map | jsonify }};
+    const details = "Ghé chơi " + either + "\nTòa " + {{ g.venue | jsonify }} + ", cơ sở 1 (268 Lý Thường Kiệt)\nMap: " + {{ g.map | jsonify }};
     const esc = t => t.replace(/\\/g, "\\\\").replace(/[,;]/g, m => "\\" + m).replace(/\n/g, "\\n");
 
     document.querySelectorAll("a.gcal").forEach(a => {
-      const [s, e] = span({ start: a.dataset.start, hours: +a.dataset.hours });
+      const [s, e] = span({ start: a.dataset.start, end: a.dataset.end });
       a.href = "https://calendar.google.com/calendar/render?action=TEMPLATE"
         + "&text=" + encodeURIComponent(title)
         + "&dates=" + utc(s) + "/" + utc(e)
@@ -338,3 +354,10 @@ extra_css: /assets/css/graduation.css
 
   loadWishes();
 </script>
+
+{% else %}
+<!-- graduation page is switched off in _config.yml: send visitors home -->
+<meta http-equiv="refresh" content="0; url={{ '/' | relative_url }}">
+<script>location.replace({{ '/' | relative_url | jsonify }});</script>
+<p class="back">this page is closed. <a href="{{ '/' | relative_url }}">← back home</a></p>
+{% endif %}
