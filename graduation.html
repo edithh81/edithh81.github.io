@@ -58,7 +58,7 @@ extra_css: /assets/css/graduation.css
           <span class="cal-day">{{ d.start | date: "%-d" }}</span>
           <span class="cal-weekday">{{ d.start | date: "%a" | downcase }}</span>
         </div>
-        <p class="cal-time">{{ d.start | date: "%H:%M" }} – {{ d.end | date: "%H:%M" }}</p>
+        <p class="cal-time">{{ d.start | date: "%H:%M" }}<span>to</span>{{ d.end | date: "%H:%M" }}</p>
       </div>
       {% endfor %}
     </div>
@@ -104,19 +104,6 @@ extra_css: /assets/css/graduation.css
 </nav>
 
 {% if g.note %}<p class="invite-note">{{ g.note }}</p>{% endif %}
-
-{% if g.campus_map %}
-<section id="campus-map">
-  <h2 class="bar">campus map</h2>
-  <figure class="campus-map">
-    <a href="{{ g.campus_map_link | default: g.campus_map | relative_url }}" target="_blank" rel="noopener">
-      <img src="{{ g.campus_map | relative_url }}" width="1600" height="995" loading="lazy"
-           alt="map of HCMUT campus 1; hall A5 (hội trường A5) is in the middle of the campus">
-    </a>
-    <figcaption>come in through the 268 Lý Thường Kiệt gate. hall {{ g.venue }} (hội trường {{ g.venue }}) is in the middle of the campus. tap the map to open it full size.</figcaption>
-  </figure>
-</section>
-{% endif %}
 
 <!-- wish form -->
 <section>

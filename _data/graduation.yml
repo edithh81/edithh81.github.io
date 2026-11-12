@@ -12,9 +12,7 @@ days:
 venue: A5
 address: HCMUT, 268 Đ. Lý Thường Kiệt, Diên Hồng, Hồ Chí Minh
 map: https://maps.app.goo.gl/93vjgKQHn5GQSSNQ6
-# campus 1 map shown under the invitation (leave empty to hide)
-campus_map: /assets/img/hcmut-campus-map.jpg
-# where tapping the campus map goes (empty = open the image itself)
+# "campus map →" link in the where card (leave empty to hide)
 campus_map_link: https://drive.google.com/file/d/1ueLD8Y1Efnt28OXl0aOpp7mthloVN2dy/view?usp=sharing
 # location shown in google / apple / outlook calendar events (google maps finds this name)
 calendar_location: University of Technology - Vietnam National University Ho Chi Minh City, 268 Lý Thường Kiệt, Hồ Chí Minh

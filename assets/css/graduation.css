@@ -91,8 +91,8 @@
   font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 .cal-weekday { font-size: .75rem; color: var(--muted); padding: 2px 0 6px; }
-.cal-time { margin: 8px 0 0; font-size: 1.15rem; font-weight: 700; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.cal-time span { display: block; font-size: .7rem; font-weight: 600; color: var(--muted); letter-spacing: 1px; }
+.cal-time { margin: 8px 0 0; font-size: 1.15rem; font-weight: 700; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.cal-time span { display: block; font-size: .7rem; font-weight: 600; color: var(--muted); letter-spacing: 1px; margin: 1px 0; }
 
 .card-label { margin: 0; font-size: .72rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); }
 .card-big {
@@ -131,11 +131,7 @@
 .cal-options a { padding: 10px 14px; border: 0; color: var(--ink); font-size: .9rem; font-weight: 600; }
 .cal-options a + a { border-top: 1px dashed var(--rule); }
 .cal-options a:hover { background: var(--bar); color: var(--bar-ink); }
-/* campus map under the invitation */
-.campus-map { margin: 0; }
-.campus-map img { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 6px 18px rgba(29,42,68,.18); }
-.campus-map figcaption { margin-top: 8px; font-size: .85rem; color: var(--muted); text-align: center; }
-.card-where .pin-link + .pin-link { margin-left: 12px; }
+.card-where .pin-link + .pin-link { display: table; margin-top: 6px; }   /* own line, aligned under "see on map" */
 
 .invite-note { margin: 10px 0 0; text-align: center; font-size: .9rem; color: var(--muted); font-style: italic; }
 
@@ -208,6 +204,7 @@
   .greet-dear { font-size: 1.3rem; }
   .quick { display: block; margin: 0 0 16px; text-align: center; font-weight: 700; color: var(--ink); font-size: .95rem; }
   .quick p { margin: 0; display: flex; justify-content: center; flex-wrap: wrap; }
+  .quick span { white-space: nowrap; }   /* keep each day on one line; wrap only at "or" */
   .quick .or { margin: 0 8px; font-weight: 400; color: var(--muted); }
   .cal-menu { flex: 1; display: flex; }
   .cal-menu summary { flex: 1; justify-content: center; }
