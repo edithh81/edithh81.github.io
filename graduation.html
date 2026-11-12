@@ -153,6 +153,8 @@ extra_css: /assets/css/graduation.css
     days: [{% for d in g.days %}{% assign day = d.start | date: "%a %-d/%-m" | downcase %}{% assign hm = d.start | date: "%H:%M" %}{% assign he = d.end | date: "%H:%M" %}{{ day | append: " · " | append: hm | append: " – " | append: he | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
     place: {{ g.venue | prepend: "building " | append: ", HCMUT" | jsonify }},
     address: {{ g.address | jsonify }},
+    {% assign c = g.contacts | first %}{% assign digits = c.phone | remove: " " %}{% capture phone %}{{ digits | slice: 0, 4 }} {{ digits | slice: 4, 3 }} {{ digits | slice: 7, 3 }}{% endcapture %}
+    contact: {% if c %}{{ c.name | append: " · " | append: phone | jsonify }}{% else %}""{% endif %},   // shown on the card
     url: {{ site.url | remove: "https://" | append: "/graduation" | jsonify }},
   };
 </script>

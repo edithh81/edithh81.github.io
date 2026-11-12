@@ -50,7 +50,7 @@
     for (let i = 0; i < 9000; i++) ctx.fillRect(Math.random() * W, Math.random() * H, 2, 2);
 
     // poster in the middle
-    const pw = 590, ph = pw * poster.height / poster.width, py = 320;
+    const pw = 530, ph = pw * poster.height / poster.width, py = 320;
     ctx.save();
     ctx.translate(W / 2, py + ph / 2); ctx.rotate(-1 * Math.PI / 180);
     ctx.shadowColor = "rgba(29,42,68,.3)"; ctx.shadowBlur = 40; ctx.shadowOffsetY = 14;
@@ -90,6 +90,12 @@
     ctx.fillText("W H E R E", 0, y); y += 52;
     ctx.fillStyle = INK; fit(ctx, C.place, 820, 44, 700, SANS); ctx.fillText(C.place, 0, y); y += 42;
     ctx.fillStyle = MUTED; fit(ctx, C.address, 820, 30, 400, SANS); ctx.fillText(C.address, 0, y);
+    if (C.contact) {
+      y += 62;
+      ctx.fillStyle = ACCENT; ctx.font = `700 26px ${SANS}`;
+      ctx.fillText("C O N T A C T", 0, y); y += 50;
+      ctx.fillStyle = INK; fit(ctx, "☎ " + C.contact, 820, 40, 700, SANS); ctx.fillText("☎ " + C.contact, 0, y);
+    }
     ctx.restore();
 
     // tiny footer
