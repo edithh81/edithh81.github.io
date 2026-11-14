@@ -92,7 +92,7 @@ extra_css: /assets/css/graduation.css
 
 <nav class="actions" aria-label="quick actions">
   <details class="cal-menu">
-    <summary class="btn">📅 add to calendar</summary>
+    <summary class="btn">📅 <span class="full">add to calendar</span><span class="short">calendar</span></summary>
     <div class="cal-options">
       {% for d in g.days %}
       <a class="gcal" data-start="{{ d.start }}" data-end="{{ d.end }}" href="https://calendar.google.com/" target="_blank" rel="noopener">google · {{ d.start | date: "%a %-d/%-m" | downcase }}</a>
@@ -100,13 +100,14 @@ extra_css: /assets/css/graduation.css
       <a id="ics" href="#" download="huy-graduation.ics">apple / outlook · all days</a>
     </div>
   </details>
-  <a class="btn" href="{{ g.map }}" target="_blank" rel="noopener">📍 directions</a>
+  <a class="btn" href="{{ g.map }}" target="_blank" rel="noopener">📍 <span class="full">directions</span><span class="short">map</span></a>
+  <a class="btn wish-jump" href="#wishes">✎ <span class="full">leave a wish</span><span class="short">wish</span> ↓</a>
 </nav>
 
 {% if g.note %}<p class="invite-note">{{ g.note }}</p>{% endif %}
 
 <!-- wish form -->
-<section>
+<section id="wishes">
   <h2 class="bar">leave a wish</h2>
   <form id="wish-form" class="wish-form" autocomplete="off">
     <textarea id="wish-text" maxlength="280" rows="3" required

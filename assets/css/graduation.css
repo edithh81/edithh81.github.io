@@ -118,6 +118,12 @@
 }
 .btn:hover { background: var(--accent); color: #fff; }
 .btn:active { transform: translate(2px, 2px); box-shadow: none; }
+.btn .short { display: none; }
+.btn.wish-jump { background: var(--star); color: var(--ink); }
+.btn.wish-jump:hover { background: var(--accent); color: #fff; }
+html { scroll-behavior: smooth; }
+#wishes { scroll-margin-top: 12px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 .btn.ghost { background: #fbf8f1; color: var(--ink); border: 1px solid var(--ink); }
 .btn.ghost:hover { background: var(--ink); color: #fff; }
 .cal-menu { position: relative; }
