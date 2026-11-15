@@ -16,6 +16,7 @@ layout: default
     <nav class="links">
       {% if p.github %}<span><a href="https://github.com/{{ p.github }}">github</a></span>{% endif %}
       {% if p.linkedin %}<span><a href="{{ p.linkedin }}">linkedin</a></span>{% endif %}
+      {% if p.x %}<span><a href="https://x.com/{{ p.x }}">x</a></span>{% endif %}
       {% if p.orcid %}<span><a href="{{ p.orcid }}">orcid</a></span>{% endif %}
       {% if p.email %}<span><a href="mailto:{{ p.email }}">email</a></span>{% endif %}
       {% if p.cv %}<span><a href="{{ p.cv | relative_url }}">cv</a></span>{% endif %}
