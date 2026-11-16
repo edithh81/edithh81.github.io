@@ -17,7 +17,6 @@ layout: default
       {% if p.github %}<span><a href="https://github.com/{{ p.github }}">github</a></span>{% endif %}
       {% if p.linkedin %}<span><a href="{{ p.linkedin }}">linkedin</a></span>{% endif %}
       {% if p.x %}<span><a href="https://x.com/{{ p.x }}">x</a></span>{% endif %}
-      {% if p.email %}<span><a href="mailto:{{ p.email }}">email</a></span>{% endif %}
       {% if p.cv %}<span><a href="{{ p.cv | relative_url }}">cv</a></span>{% endif %}
       {% if p.gallery %}<span><a href="{{ p.gallery }}">my-gallery</a></span>{% endif %}
       {% if site.graduation %}<span><a href="{{ '/graduation/' | relative_url }}">graduation 🎓</a></span>{% endif %}
