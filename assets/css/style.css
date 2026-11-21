@@ -97,6 +97,7 @@ hr.fade {
 .pubs .title { font-weight: 600; }
 .pubs .authors, .pubs .venue { font-size: .87rem; }
 .pubs .venue { color: var(--muted); }
+.pubs .note { font-size: .78rem; color: var(--muted); font-style: italic; }
 .plinks { font-size: .8rem; }
 .plinks a { border: 0; }
 

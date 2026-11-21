@@ -57,6 +57,7 @@ layout: default
     <li>
       <span class="title">{{ pub.title }}</span>
       <span class="authors">{{ pub.authors | replace: p.paper_name, me }}</span>
+      {% if pub.note %}<span class="note">{{ pub.note }}</span>{% endif %}
       <span class="venue"><em>{{ pub.venue }}</em>, {{ pub.year }}</span>
       {% if pub.links %}<span class="plinks">{% for l in pub.links %}<a href="{{ l[1] }}">[{{ l[0] }}]</a> {% endfor %}</span>{% endif %}
     </li>

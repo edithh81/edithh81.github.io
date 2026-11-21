@@ -1,6 +1,7 @@
 # newest first. your `paper_name` from profile.yml gets underlined.
 - title: Knowledge-Aware Intent-Guided Subgraph Sampling for Recommendation
-  authors: Trung-Tin Ta, Hoang-Huy Vo, Nam Thoai
+  authors: Trung-Tin Ta*, Hoang-Huy Vo*, Nam Thoai
+  note: "* equal contribution"
   venue: Web and Big Data (APWeb-WAIM 2026), Springer, pp. 129–145
   year: 2026
   links:
